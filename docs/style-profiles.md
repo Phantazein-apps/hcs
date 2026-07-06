@@ -2,7 +2,7 @@
 
 Status: DRAFT · Informative, except where it cites SPEC.md
 Prior art: this pattern generalizes ideas from Percona Lab's MYNAH (MIT),
-rebuilt here as an open HCS convention.
+rebuilt here as an open PCP convention.
 
 ## What this is
 
@@ -12,7 +12,7 @@ imperfections — per communication context and per language.
 
 Voice is impersonation-adjacent, so the entire mechanism rides on two things
 the protocol already has: memory pages and the sensitivity gate. There is no
-new subsystem, no new scope, and no product dependency. Any conforming HCS
+new subsystem, no new scope, and no product dependency. Any conforming PCP
 server hosts style profiles; any client that can read sensitive memory can
 use them.
 

@@ -1,8 +1,8 @@
-# HCS Specification — v0.1-draft
+# PCP Specification — v0.1-draft
 
-**Hosted Context Server protocol — format & server behavior**
+**Portable Context Protocol — format & server behavior**
 
-Status: DRAFT · License: Apache 2.0 · Last updated: 2026-07-05
+Status: DRAFT · License: Apache 2.0 · Last updated: 2026-07-06
 
 The key words MUST, SHOULD, MAY are to be interpreted as in RFC 2119.
 
@@ -10,7 +10,7 @@ The key words MUST, SHOULD, MAY are to be interpreted as in RFC 2119.
 
 ## 1. Overview
 
-An **HCS context** is one person's portable AI context. It has three parts:
+A **PCP context** is one person's portable AI context. It has three parts:
 
 | Part | What it holds | Section |
 |---|---|---|
@@ -18,14 +18,14 @@ An **HCS context** is one person's portable AI context. It has three parts:
 | **Memory** | Long-term unstructured memory: markdown pages + a semantic index (PACK-compatible) | §5 |
 | **Connections** | Live bridges to external sources (Notion, email, messaging, tasks) exposed as namespaced MCP tools | §6 |
 
-A **Hosted Context Server (HCS)** is any server that stores an HCS context and serves it over MCP per §3. An HCS MAY be self-hosted (localhost, home server), run by a hosting provider, or run as managed SaaS — the wire behavior is identical.
+A **PCP server** is any server that stores a PCP context and serves it over MCP per §3. A PCP server MAY be self-hosted (localhost, home server), run by a hosting provider, or run as managed SaaS — the wire behavior is identical.
 
 ### 1.1 Design principles
 
 1. **The user owns the context.** Export (§8) is mandatory. A conforming server that cannot fully export a context is non-conforming.
 2. **Consent is per-category, not all-or-nothing.** Sensitive data lives in extension namespaces with independent OAuth scopes (§4.3, §7).
 3. **One endpoint.** A client configures exactly one URL and one OAuth flow; everything else is negotiated.
-4. **MCP-native.** HCS adds no new transport. Anything that speaks MCP can consume an HCS context.
+4. **MCP-native.** PCP adds no new transport. Anything that speaks MCP can consume a PCP context.
 5. **Host-agnostic.** No feature may depend on a specific cloud vendor. The reference deployment target is one Linux box.
 
 ## 2. Discovery
@@ -33,16 +33,16 @@ A **Hosted Context Server (HCS)** is any server that stores an HCS context and s
 A server MUST serve a discovery document at:
 
 ```
-GET /.well-known/hcs.json
+GET /.well-known/pcp.json
 ```
 
 ```json
 {
-  "hcs_version": "0.1",
+  "pcp_version": "0.1",
   "mcp_endpoint": "https://ctx.example.com/mcp",
   "sse_endpoint": "https://ctx.example.com/sse",
   "authorization_server": "https://ctx.example.com",
-  "profile_extensions": ["hcs.health", "hcs.legal", "hcs.family", "hcs.residency"],
+  "profile_extensions": ["pcp.health", "pcp.legal", "pcp.family", "pcp.residency"],
   "connections": ["notion", "email", "tasks"],
   "export": true,
   "encryption": { "at_rest": true, "e2e": false }
@@ -56,9 +56,9 @@ GET /.well-known/hcs.json
 
 A single origin MAY host many contexts under distinct base paths
 (`https://host.example/<handle>`). Such a host MUST serve a per-context
-discovery document at `<context-base>/.well-known/hcs.json`
-(e.g. `https://host.example/dk/.well-known/hcs.json`) whose `mcp_endpoint`
-points at that context's endpoint. The origin-root `/.well-known/hcs.json`
+discovery document at `<context-base>/.well-known/pcp.json`
+(e.g. `https://host.example/dk/.well-known/pcp.json`) whose `mcp_endpoint`
+points at that context's endpoint. The origin-root `/.well-known/pcp.json`
 then describes the host itself — same fields, no tenant specifics — and
 SHOULD include `"multi_context": true`. Everything else in this spec applies
 per context, not per origin.
@@ -96,14 +96,14 @@ Sensitive and specialized data lives in **extension namespaces**, each with its 
 
 | Namespace | Contents (summary) | Sensitivity |
 |---|---|---|
-| `hcs.health` | Conditions, medications, allergies, providers, insurance | Special category |
-| `hcs.legal` | Legal matters, contracts of record, attorney contacts | High |
-| `hcs.family` | Family structure, dependents, important dates, emergency contacts | High |
-| `hcs.residency` | Citizenship(s), visas, residency status, tax residency | Special category |
-| `hcs.finance` | Accounts (references, not credentials), obligations, advisors | High |
-| `hcs.home` | Address(es), household, vehicles | Medium |
+| `pcp.health` | Conditions, medications, allergies, providers, insurance | Special category |
+| `pcp.legal` | Legal matters, contracts of record, attorney contacts | High |
+| `pcp.family` | Family structure, dependents, important dates, emergency contacts | High |
+| `pcp.residency` | Citizenship(s), visas, residency status, tax residency | Special category |
+| `pcp.finance` | Accounts (references, not credentials), obligations, advisors | High |
+| `pcp.home` | Address(es), household, vehicles | Medium |
 
-Extension schemas are versioned independently and registered in [`extensions/`](extensions/). Third parties MAY define extensions under their own prefix (`org.example.pets`); the `hcs.*` prefix is reserved for this registry.
+Extension schemas are versioned independently and registered in [`extensions/`](extensions/). Third parties MAY define extensions under their own prefix (`org.example.pets`); the `pcp.*` prefix is reserved for this registry.
 
 ### 4.3 Rules for extensions
 
@@ -172,7 +172,7 @@ The RECOMMENDED default grant for a new chat client is: `profile.core:read`, `me
 
 ## 10. Conformance
 
-A server may claim **"HCS v0.1 conformant"** if it implements: discovery (§2), transport + OAuth (§3), `profile.core` (§4.1), memory tools (§5, §6), scope enforcement (§7), and export (§8). Extensions and connections are optional; if present they MUST follow §4.2–4.3 and §6.
+A server may claim **"PCP v0.1 conformant"** if it implements: discovery (§2), transport + OAuth (§3), `profile.core` (§4.1), memory tools (§5, §6), scope enforcement (§7), and export (§8). Extensions and connections are optional; if present they MUST follow §4.2–4.3 and §6.
 
 ## 11. Open questions for v0.2
 
@@ -180,5 +180,5 @@ A server may claim **"HCS v0.1 conformant"** if it implements: discovery (§2), 
 - Multi-profile (work persona vs personal persona) under one tenant
 - Push vs pull ingestion contract for connections
 - Formal export manifest schema + conformance test suite
-- Federation: can two HCS instances share scoped context (family plans)?
+- Federation: can two PCP instances share scoped context (family plans)?
 - Standardizing the management surface — see the informative draft in [`docs/management-api.md`](docs/management-api.md)

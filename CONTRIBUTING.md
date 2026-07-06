@@ -1,6 +1,6 @@
-# Contributing to HCS
+# Contributing to PCP
 
-HCS is an open specification. Until v0.2, the process is deliberately lightweight:
+PCP is an open specification. Until v0.2, the process is deliberately lightweight:
 
 - **Discussion** → GitHub Issues. One topic per issue. Design questions welcome — see SPEC §11 for the open list.
 - **Changes** → PRs against `SPEC.md` / schemas. Normative changes must state: what breaks, who's affected, migration path.

@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://hcs.dev/schemas/0.1/hcs.health.schema.json",
-  "title": "HCS Extension: hcs.health",
+  "$id": "https://pcp.dev/schemas/0.1/pcp.health.schema.json",
+  "title": "PCP Extension: pcp.health",
   "description": "Special-category health data. Requires scope profile.health:read|write. MUST be stored encrypted with a key separate from general tenant data. This schema is the reference example for extension authors.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "hcs_version": { "const": "0.1" },
+    "pcp_version": { "const": "0.1" },
     "blood_type": { "type": "string" },
     "allergies": {
       "type": "array",

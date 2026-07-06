@@ -1,10 +1,10 @@
-# HCS Security Model & Self-Hosting Best Practices
+# PCP Security Model & Self-Hosting Best Practices
 
 This document is non-normative except where it restates SPEC §9. It is the living home for community best practices on securing a context server. PRs welcome — this is exactly the document the community should own.
 
 ## Threat model
 
-An HCS context is among the most sensitive datasets a person has: health, legal, citizenship, family, plus live access to email and messages. Assume:
+A PCP context is among the most sensitive datasets a person has: health, legal, citizenship, family, plus live access to email and messages. Assume:
 
 | Threat | Primary mitigations |
 |---|---|

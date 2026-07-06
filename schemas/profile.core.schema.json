@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://hcs.dev/schemas/0.1/profile.core.schema.json",
-  "title": "HCS Core Profile",
+  "$id": "https://pcp.dev/schemas/0.1/profile.core.schema.json",
+  "title": "PCP Core Profile",
   "description": "Low-sensitivity, high-utility personal context. Everything sensitive belongs in an extension namespace, never here.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["hcs_version", "name"],
+  "required": ["pcp_version", "name"],
   "properties": {
-    "hcs_version": { "const": "0.1" },
+    "pcp_version": { "const": "0.1" },
     "name": { "type": "string", "description": "Full name" },
     "preferred_name": { "type": "string" },
     "pronouns": { "type": "string" },
@@ -38,7 +38,7 @@
         "city": { "type": "string" },
         "country": { "type": "string", "description": "ISO 3166-1 alpha-2" }
       },
-      "description": "Coarse only. Street addresses belong in hcs.home."
+      "description": "Coarse only. Street addresses belong in pcp.home."
     },
     "communication": {
       "type": "object",

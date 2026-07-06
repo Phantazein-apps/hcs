@@ -1,4 +1,4 @@
-# HCS Management API — draft for v0.2 (informative)
+# PCP Management API — draft for v0.2 (informative)
 
 Status: DRAFT · Informative, not normative for v0.1 conformance
 
