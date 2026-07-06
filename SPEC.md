@@ -142,7 +142,7 @@ The RECOMMENDED default grant for a new chat client is: `profile.core:read`, `me
 
 ### 7.3 Device management & audit
 
-- The server MUST provide a way (UI or API) to list active grants (client, device, scopes, last used) and revoke each individually.
+- The server MUST provide a way (UI or API) to list active grants (client, device, scopes, last used) and revoke each individually. A RECOMMENDED shape for this management surface is drafted in [`docs/management-api.md`](docs/management-api.md) (informative).
 - The server MUST keep an **access log** per tenant: which client read which category, when. The log MUST be visible to the user and SHOULD be exposed as `audit.list` under a `profile.core:read` scope.
 
 ## 8. Portability: export & import
@@ -169,3 +169,4 @@ A server may claim **"HCS v0.1 conformant"** if it implements: discovery (§2), 
 - Push vs pull ingestion contract for connections
 - Formal export manifest schema + conformance test suite
 - Federation: can two HCS instances share scoped context (family plans)?
+- Standardizing the management surface — see the informative draft in [`docs/management-api.md`](docs/management-api.md)
